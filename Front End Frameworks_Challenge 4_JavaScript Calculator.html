@@ -1,0 +1,135 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>JavaScript Calculator</title>
+    <script>
+      let trailingResult = 0;
+      let operationOptions = ["subtract", "multiply", "divide", "add"];
+      let workingOperation = "";
+
+
+      function updateDisplay(input) {
+        let display = document.getElementById("display");
+        let secondaryDisplay = document.getElementById("secondaryDisplay")
+
+        if (display.innerHTML === "0" && operationOptions.indexOf(input) === -1) {
+          if (input === "decimal") {
+            display.innerHTML = "0.";
+           } else if(input === "negative-value") {
+            if(display.innerHTML.indexOf("-1") === -1) {
+              display.innerHTML = "-" + display.innerHTML;
+            } else if(display.innerHTML.indexOf("-1" > -1)) {
+              display.innerHTML = display.innerHTML.slice(1, display.innerHTML.length);
+            }
+           } else {
+              display.innerHTML = input;}
+        } else if(operationOptions.indexOf(input) >= 0) {
+
+          if(trailingResult === display.innerHTML) {
+                workingOperation = input;
+              } else if(workingOperation === "") {
+                workingOperation = input;
+                trailingResult = display.innerHTML;
+                display.innerHTML = 0;
+              } else {
+                trailingResult = calculate(trailingResult, display.innerHTML, workingOperation);
+                secondaryDisplay.innerHTML = trailingResult;
+                display.innerHTML = 0;
+                workingOperation = input;
+              }
+
+        } else if(input === "equals") {
+            display.innerHTML = calculate(trailingResult, display.innerHTML, workingOperation);
+            trailingResult = 0;
+            workingOperation = "";
+        } else if(input === "decimal") {
+          if(display.innerHTML.indexOf(".") === -1) {
+                display.innerHTML += ".";
+          }
+           
+        } else if(input === "negative-value") {
+            if(display.innerHTML.indexOf("-1") === -1) {
+              display.innerHTML = "-" + display.innerHTML;
+            } else if(display.innerHTML.indexOf("-1" > -1)) {
+              display.innerHTML = display.innerHTML.slice[1, display.innerHTML.length];
+            }
+        } else {
+          display.innerHTML += input;
+        }
+      }
+
+      function clearDisplay() {
+       let display = document.getElementById("display");
+        trailingResult = 0;
+       display.innerHTML = 0;
+      }
+
+      function calculate(firstNumber, secondNumber, operation) {
+       firstNumber = parseFloat(firstNumber);
+       secondNumber = parseFloat(secondNumber);
+        switch(operation) {
+            case "add":
+              result = firstNumber + secondNumber;
+            break;
+            case "subtract":
+              result = firstNumber - secondNumber;
+              break;
+            case "multiply":
+              result = firstNumber*secondNumber;
+            break;
+            case "divide":
+              result = firstNumber / secondNumber;
+            break;
+           default: 
+        }
+        return result.toString();
+      }
+    </script>
+  </head>
+  <body class="text-center">
+
+    <div class="container-fluid">
+      
+    <h1>JavaScript Calculator</h1>
+    <a class="btn btn-primary" id="equals" onclick="updateDisplay('equals')">=</a>
+      <a id="zero" class="btn btn-primary" onclick="updateDisplay(0)">0</a>
+      <a id="one" class="btn btn-primary" onclick="updateDisplay(1)">1</a>
+      <a id="two" class="btn btn-primary" onclick="updateDisplay(2)">2</a>
+      <a id="three" class="btn btn-primary" onclick="updateDisplay(3)">3</a>
+      <a id="four" class="btn btn-primary" onclick="updateDisplay(4)">4</a>
+      <a id="five" class="btn btn-primary" onclick="updateDisplay(5)">5</a>
+      <a id="six" class="btn btn-primary" onclick="updateDisplay(6)">6</a>
+      <a id="seven" class="btn btn-primary" onclick="updateDisplay(7)">7</a>
+      <a id="eight" class="btn btn-primary" onclick="updateDisplay(8)">8</a>
+      <a id="nine" class="btn btn-primary" onclick="updateDisplay(9)">9</a>
+
+      <a id="add" class="btn btn-secondary" onclick="updateDisplay('add')">+</a>
+      <a id="subtract" class="btn btn-secondary" onclick="updateDisplay('subtract')">-</a>
+      <a id="multiply" class="btn btn-secondary" onclick="updateDisplay('multiply')">*</a>
+      <a id="divide" class="btn btn-secondary" onclick="updateDisplay('divide')">/</a>
+      <a id="decimal" class="btn btn-secondary" onclick="updateDisplay('decimal')">.</a></br>
+      <a id="negative-value" class="btn btn-secondary" onclick="updateDisplay('negative-value')">NEG</a></br>
+      <a id="clear" class="btn btn-danger" onclick="clearDisplay()">Clear</a></br>
+      <div id="display" class="text-center text-white bg-info my-3">0</div>
+
+
+      <div id="secondaryDisplay" class="bg-warning">0</div>
+      <div class="text-center my-2">Programming for Idiots</div>
+  </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
+  </body>
+</html>
